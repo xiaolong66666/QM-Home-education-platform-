@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="xiaolong" content="order by dede58.com/" />
+<title>启梦平台</title>
+<link rel="icon" href="/images/sign.png">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/animation.css" rel="stylesheet">
+<link href="css/lrtk.css" rel="stylesheet" />
+<!--element-ui的样式-->
+<link rel="stylesheet" href="element-ui/index.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/js.js"></script>
+    <style>
+        .el-carousel__item h3 {
+            /*color: #475669;*/
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 200px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            /*background-color: #99a9bf;*/
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            /*background-color: #d3dce6;*/
+        }
+        .time {
+            font-size: 13px;
+            color: #e59b3b;
+        }
+
+        .bottom {
+            margin-top: 13px;
+            line-height: 12px;
+        }
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+    </style>
+</head>
+<body>
+<header>
+	<nav id="nav">
+        <h1 style="font-style:italic">启梦平台首页</h1>
+         <script src="js/silder.js"></script><!--获取当前页导航 高亮显示标题--> 
+    </nav>
+</header>
+
+<div id="mainbody">
+<!--    走马灯-->
+    <template>
+        <el-carousel :interval="4000" type="card" height="200px" autoplay interval="2000">
+            <el-carousel-item v-for="item in 6" :key="item">
+                <!--                <h3 class="medium">{{ item }}</h3>-->
+                <img style="height:200px;width:130px;opacity:0"/>
+                <img src="images/BG.jpg"/>
+                <img style="height:200px;width:50px;opacity:0"/>
+                <img src="images/BG.jpg"/>
+            </el-carousel-item>
+        </el-carousel>
+    </template>
+<!--        </template-->
+	<div class="info">
+        <figure>
+            <img src="images/art.jpg">
+            <figcaption>
+                <strong>所有成就和财富都基于认知</strong>
+                当你刻意地去做一件事，这是显意识的结果。我们需要把它们变成自发的意识，或者说潜意识，习惯渐成自然，这些新的行动又渐渐变成了自然的习惯，继而成为潜意识，从显意识到潜意识的转变，其实就是从刻意到自觉再到习惯的改变。
+            </figcaption>
+        </figure>
+        <div class="card">
+        	 <h1>Author</h1>
+              <p>网名：***</p>
+              <p>职业：***</p>
+              <p>电话|微信：***********</p>
+              <p>qq：**********</p>
+            <hr><br>
+              <div style="width: 100%">
+                  <el-button type="warning" size="mini" round><el-link type="primary" href="/student/index.html">学习资源</el-link></el-button>
+                  <el-button type="warning" size="mini" round><el-link type="primary" href="/teacher/index.html">接教教</el-link></el-button>
+                  <el-button type="warning" size="mini"  round disabled><el-link type="primary">平台管理(站长专属)</el-link></el-button><br>
+                  <h3>(找资料，接家教，找老师就来启梦平台)</h3>
+              </div>
+        </div>
+    </div>
+
+<!--info结束-->
+
+<!--博客的列表开始-->
+    <div class="blogs">
+        <ul class="bloglist">
+            <li>
+                <div class="row_box" style="border: 6px" v-for="item in report">
+                    <div class="ti"></div><!--三角形-->
+                    <div class="ci"></div><!--圆形-->
+                    <h5>{{item.createTime}}</h5>
+                    <h2 class="title" style="color: orange">{{item.title}}</h2>
+                    <ul class="textinfo">
+                        <img src="images/title1.jpg">
+                        <p>{{item.text}}</p>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    <!--右半部分开始-->
+        <aside>
+            <div class="search">
+                <el-input placeholder="请输入标题" v-model="title" class="input-with-select">
+                    <el-button size="mini" slot="append" icon="el-icon-search" @click="selectOne(title)"></el-button>
+                </el-input>
+            </div>
+            <div class="tuijian" style="height: 650px">
+                <h2 style="font-style:italic">"启梦平台"简介</h2><br>
+                <h2>平台特点："免费"，"简洁"，"丰富","共享"</h2><hr>
+                <el-link type="warning" href="/student/index.html"><h3>1,学生端：</h3></el-link>
+                <p>(1)"免费":免费资源"困难户"提供资源；如本平台无本人所需资源，
+                可在学生端界面以反馈的形式提交所需资源(站长会第一时间在平台发布该资源)</p>
+                <p>(2)"简洁":界面设计简洁,易操作;资源以链接形式发布(需自行下载)</p>
+                <p>(3)"丰富":有爬虫技术+百度文库做平台后盾,资源应有尽有;站长每日会新增20份左右文件资源,反馈优先</p>
+                <p>(4)"共享":uu们可将自己的学习资源分享出来，让大家一块学习(丰富资源库需要大家共同努力)</p><br>
+                <el-link type="warning" href="/teacher/index.html"><h3>2,教师端：</h3></el-link>
+                <p>(1)"免费":免费为长沙各家教平台发布家教(直接对接其他平台联系人,站长不参与收费)</p>
+                <p>(2)"简洁":界面设计简洁,易操作</p>
+                <p>(3)"丰富":已跟长沙各知名家教平台合作,家教资源丰富</p>
+                <p>(4)"共享":家教信息实时更新,一天之内与其他家教平台同步一次数据</p><br>
+                <el-link type="warning"><h3>3,管理端：</h3></el-link>
+                <p>该模块用于管理平台所有模块,只供站长使用</p><br>
+                <hr>
+                <p>大家一起努力起来吧！遇到困难记得还有"启梦"在你身后哟（づ￣3￣）づ╭❤～</p>
+            </div>
+<!--            插入logo-->
+        </aside>
+	</div>
+    <hr>
+    <div style="display: flex">
+        <div class="tuijian" style="height: 200px;width:50%;overflow-y: auto;overflow-x:hidden;">
+            <h2 style="color: orange">所有公告</h2>
+            <ol v-for="(item,index) in total_report">
+                <li @click="selectOne(item.title)"><span> <strong>{{index+1}}</strong></span>{{item.title}}</li>
+            </ol>
+        </div>
+        <div class="clicks" style="height: 200px;overflow-y: auto;overflow-x:hidden;width: 50%">
+            <h2 style="color: orange">热门网站</h2>
+            <ol v-for="item in hotApp">
+                <li><span>慢生活</span><a style="color: green" :href="item.url">{{item.name}}</a></li>
+            </ol>
+        </div>
+    </div>
+    <!--blogs结束-->
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="js/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="element-ui/index.js"></script>
+<!-- 引入axios -->
+<script src="js/axios.min.js"></script>
+</body>
+<script>
+    new Vue({
+        el:'#mainbody',
+        data(){
+            return {
+                title:'',
+                hotApp:[],
+                report:[],
+                total_report:[]
+            }
+        },
+        created(){
+            this.initData('');
+            this.initHotApp();
+        },
+        mounted(){
+
+        },
+        methods:{
+            //初始化数据
+            initData(){
+                let self_=this;
+                axios.get("/QM/report/list").then((resp)=>{
+                    if (resp.data.code === 1){
+                        self_.report=resp.data.data
+                        self_.total_report=resp.data.data
+                    }else {
+                        this.$message.error("服务器未知异常！")
+                    }
+                })
+            },
+            //点击下方公告实现跳转
+            selectOne(title){
+                let self_=this;
+                axios.get("/QM/report/list?title="+title).then((resp)=>{
+                    if (resp.data.code === 1){
+                        self_.report=resp.data.data
+                    }else {
+                        this.$message.error("服务器未知异常！")
+                    }
+                })
+            },
+            //加载热门应用
+            initHotApp(){
+                let self_=this;
+                axios.get("/QM/hotApp/list").then((resp)=>{
+                    if (resp.data.code === 1){
+                        self_.hotApp=resp.data.data
+                    }else {
+                        this.$message.error("服务器未知异常！")
+                    }
+                })
+            }
+
+        }
+    })
+</script>
+</html>
+

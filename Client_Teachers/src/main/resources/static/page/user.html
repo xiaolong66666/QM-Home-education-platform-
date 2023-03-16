@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <title>启梦</title>
+    <link rel="icon" href="../images/sign.png">
+    <!--element-ui的样式-->
+    <link rel="stylesheet" href="../element-ui/index.css" />
+    <!-- 引入样式  -->
+    <link rel="stylesheet" href="../css/index.css" />
+    <!--本页面内容的样式-->
+    <link rel="stylesheet" href="../css/user.css" />
+</head>
+<body>
+    <div id="user" class="app">
+        <div class="divHead">
+            <div class="divTitle">
+                <i class="el-icon-arrow-left" @click="goBack"></i>个人中心
+            </div>
+            <div class="divUser">
+                <img :src="image"/>
+                <div class="desc">
+                    <div class="divName">{{username}}</div>
+                    <div v-if="username == '尚未登录'" class="divName" @click="goLogin"><i class="el-icon-thumb"><span style="color: blue">去登录</span></i></div>
+                </div>
+<!--                -->
+            </div>
+        </div>
+        <div class="divContent">
+            <div class="divLinks">
+                <div class="divSplit"></div>
+                <div class="item" @click="toOrderPage">
+                    <img src="../images/orders.png"/>
+                    <el-link :underline="false">点击查看历史订单</el-link><br>
+                </div>
+                <hr>
+                <el-link :underline="false">温馨提示：</el-link><br>
+                <el-link :underline="false">1,本平台暂不接入支付功能;</el-link><br>
+                <el-link :underline="false">2,本平台中包含的所有家教平台都是长沙知名家教平台(有保障);</el-link><br>
+                <el-link :underline="false">3,每个家教信息费的定价权在于其对应的家教平台(在该平台接单可获得站长私人补贴);</el-link><br>
+            </div>
+            <div class="divOrders">
+                <div class="title">最新订单</div>
+                <div class="stimeStatu">
+                    <el-link :underline="false">订单号：{{order.id}}</el-link>
+                </div>
+                <div class="dishList">
+                    <el-link :underline="false">{{order.createTime}}</el-link>
+                    <el-link :underline="false" v-if="order.memberId == '2'">特价家教</el-link>
+                    <el-link :underline="false" v-if="order.memberId == '3'">长沙家教吧</el-link>
+                    <el-link :underline="false" v-if="order.memberId == '4'">华师家教</el-link>
+                    <el-link :underline="false" v-if="order.memberId == '5'">质优家教</el-link>
+                    <el-link :underline="false" v-if="order.memberId == '6'">春蚕家教</el-link>
+                    <br>
+                    <el-link :underline="false">{{order.text}}</el-link>
+                </div>
+            </div>
+            <div class="quitLogin" @click="toIndex">
+                退出登录
+            </div>
+        </div>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="../js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="../element-ui/index.js"></script>
+    <!-- 引入axios -->
+    <script src="../js/axios.min.js"></script>
+    <!--不同屏幕尺寸根字体设置-->
+    <script src="../js/base.js"></script>
+    <script src="../js/request.js"></script>
+    <script>
+        new Vue({
+            el:"#user",
+            data(){
+                return {
+                    image: '../images/avator.jpg',
+                    username: '尚未登录',
+                    order:{
+                        id: "暂无数据",
+                        createTime: "",
+                        text:"",
+                        memberId:'',
+                    },
+                }
+            },
+            computed:{},
+            created(){
+                this.initData()
+                this.getUserMessage()
+            },
+            mounted(){},
+            methods:{
+                //点击去登录
+                goLogin(){
+                    window.location.href= '/teacher/page/login.html'
+                },
+                //发送异步请求
+                getUserMessage(){
+                    let sele_this=this;
+                    axios.get("/teacher/user/userBaseMessage").then((resp)=>{
+                        if (resp.data.code === 1){
+                            sele_this.username=resp.data.data.username;
+                        }
+                    })
+                }
+                ,
+                goBack(){
+                    window.history.go(-1);
+                },
+                toOrderPage(){
+                    window.location.href = '/teacher/page/order.html'
+                },
+                initData(){
+                    this.getLatestOrder()
+                },
+                async getLatestOrder(){
+                    let self_=this;
+                    //发送axios请求获取最新该用户最新订单
+                    axios.get("/teacher/ord/latest").then((resp)=>{
+                        if (resp.data.code === 1){
+                            self_.order=resp.data.data
+                        }
+                    })
+                },
+                async toIndex(){
+                    sessionStorage.removeItem('username')
+                    //发送axios请求删除session(退出登录)
+                    axios.get("/teacher/user/loginOut");
+                    this.goBack();
+                    // window.location.href = '/teacher/index.html'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

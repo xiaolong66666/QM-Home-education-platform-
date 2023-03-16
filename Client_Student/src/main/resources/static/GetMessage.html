@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+        <title>启梦</title>
+        <link rel="icon" href="/images/sign.png">
+        <!--不同屏幕尺寸根字体设置-->
+        <script src="js/base.js"></script>
+        <!--element-ui的样式-->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入样式  -->
+        <link rel="stylesheet" href="css/index.css" />
+        <!--本页面内容的样式-->
+        <link rel="stylesheet" href="css/order.css" />
+    </head>
+    <body>
+        <div id="order" class="app">
+            <div class="divHead">
+                <div class="divTitle">
+                    <i class="el-icon-arrow-left" @click="goBack"></i>找老师
+                </div>
+            </div>
+            <div class="divContainer1">
+                <el-input placeholder="称呼" maxlength='20' v-model="form.name"/></el-input>
+                <div class="divSplit"></div>
+                <el-input placeholder="手机号(可加微信)" maxlength='20' v-model="form.phone"/></el-input>
+                <div class="divSplit"></div>
+                <el-input
+                        type="textarea"
+                        :rows="5"
+                        placeholder="家长/学生留言(可填写)"
+                        v-model="form.message">
+                </el-input>
+            </div>
+            <div style="width: 100%;display: flex;
+            justify-content: center;">
+                <el-button type="primary" @click="seedMessage()">提交</el-button>
+            </div>
+        </div>
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="js/vue.js"></script>
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <!-- 引入axios -->
+        <script src="js/axios.min.js"></script>
+        <script src="js/request.js"></script>
+        <script>
+        new Vue({
+            el:"#order",
+            data(){
+                return {
+                    form:{
+                        name:'',
+                        phone:'',
+                        message:''
+                    }
+                }
+            },
+            methods:{
+                goBack(){
+                    // window.location.href= 'index.html'
+                    window.history.go(-1);
+                },
+                seedMessage(){
+                    let self_=this;
+                    // 匹配手机号
+                    let res = /^[1][3,4,5,6.7,8,9][0-9]{9}$/
+                    console.log(self_.form.name.trim().length >0 && self_.form.phone.trim().length>0)
+                    if (self_.form.name.trim().length >0 && self_.form.phone.trim().length>0){
+                        if (res.test(self_.form.phone)){
+                            axios({
+                                method: 'post',
+                                url: '/student/clientMessage',
+                                data: this.form
+                            }).then((resp)=>{
+                                // alert(resp.data.code)
+                                if (resp.data.code===1){
+                                    // window.location.href= 'index.html'
+                                    self_.goBack();
+                                }else {
+                                    this.$message.error("系统未知异常,请稍后再试...")
+                                }
+                            })
+                        }else {
+                            this.$message.error("手机号格式有误")
+                        }
+                    }else {
+                        this.$message.error("称呼与手机号为必填信息")
+                    }
+                }
+            }
+        })
+        </script>
+    </body>
+</html>

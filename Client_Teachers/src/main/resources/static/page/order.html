@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+        <title>启梦</title>
+        <link rel="icon" href="/images/sign.png">
+        <!--不同屏幕尺寸根字体设置-->
+        <script src="../js/base.js"></script>
+        <!--element-ui的样式-->
+        <link rel="stylesheet" href="../element-ui/index.css" />
+        <!-- 引入样式  -->
+        <link rel="stylesheet" href="../css/index.css" />
+        <!--本页面内容的样式-->
+        <link rel="stylesheet" href="../css/order.css" />
+    </head>
+    <body>
+        <div id="order" class="app">
+            <div class="divHead">
+                <div class="divTitle">
+                    <i class="el-icon-arrow-left" @click="goBack"></i>启梦
+                </div>
+            </div>
+            <div class="divBody" v-if="orderList.length > 0">
+                <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    finished-text="没有更多了"
+                    @load="getList"
+                    >
+                    <van-cell v-for="(order,index) in orderList" :key="index" class="item">
+                        <div class="timeStatus">
+                            <span>{{order.id}}</span>
+                        </div>
+                        <div class="dishList">
+                            <el-link :underline="false">{{order.text}}</el-link>
+                        </div>
+                        <div class="result">
+                            <span>{{order.createTime}}</span>
+                        </div>
+                    </van-cell>
+                </van-list>
+            </div>
+            <div class="divNoData" v-else>
+                <div class="divContainer">
+                    <div>暂无订单</div>
+                </div>
+            </div>
+        </div>
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="../js/vue.js"></script>
+        <!-- 引入组件库 -->
+        <script src="../element-ui/index.js"></script>
+        <!-- 引入axios -->
+        <script src="../js/axios.min.js"></script>
+        <script src="../js/request.js"></script>
+        <script>
+        new Vue({
+            el:"#order",
+            data(){
+                return {
+                    orderList:[],
+                    loading:false,
+                    finished:false
+                }
+            },
+            computed:{},
+            created(){
+                this.initData()
+            },
+            mounted(){},
+            methods:{
+                goBack(){
+                    history.go(-1)
+                },
+                initData(){
+                    this.getList()
+                },
+                //获取订单数据
+                async getList(){
+                    let self_=this;
+                    axios.get("/teacher/ord/list").then((resp)=>{
+                        if (resp.data.code === 1){
+                            self_.orderList=resp.data.data
+                        }else {
+                            self_.$message.error(resp.data.msg)
+                        }
+                    })
+                },
+            }
+        })
+        </script>
+    </body>
+</html>

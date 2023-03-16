@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <title>启梦</title>
+    <link rel="icon" href="/images/sign.png">
+    <!--不同屏幕尺寸根字体设置-->
+    <script src="js/base.js"></script>
+    <!--element-ui的样式-->
+    <link rel="stylesheet" href="element-ui/index.css" />
+    <!-- 引入样式  -->
+    <link rel="stylesheet" href="css/index.css" />
+    <!--本页面内容的样式-->
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div id="main" class="app">
+      <div class="divHead">
+        <img src="images/user.png" @click="toUserPage"/>
+      </div>
+      <div class="divTitle">
+        <div class="divStatic">
+          <img src="/images/logo.png"  class="logo"/>
+          <div class="divDesc">
+            <div class="divName">启梦~For teaching</div>
+            <div class="divSend">
+              <i class="el-icon-user">创始人:***</i>
+              <span><img src="/images/weixing.png"/>:***********</span>
+              <span><img src="/images/qq.jpg"/>:**********</span>
+            </div>
+          </div>
+        </div>
+        <div class="divDesc">
+          <div>
+            <el-input placeholder="请输入内容(如'岳麓区','高一'等)" v-model="input" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="请选择">
+                <el-option v-for="item in hotWords" :label="item" :value="item"></el-option>
+              </el-select>
+              <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
+            </el-input><br>
+            <span>(?家教信息可单个向下滑动;点击家教可看详细信息,可接单)</span>
+          </div>
+        </div>
+      </div>
+      <div class="divBody">
+        <div class="divType">
+          <ul>
+            <li style="color: #e1cb9a" v-for="(item,index) in categoryList" :key="index" @click="categoryClick(index,item.id,item.type)" :class="{active:activeType === index}" v-if="item.status===1">{{item.name}}</li>
+          </ul>
+        </div>
+        <div class="divMenu">
+          <div>
+            <div class="divItem" v-for="(item,index) in dishList" :key="index" @click="dishDetails(item)" v-if="item.status===1">
+              <div style="display: flex;box-shadow: 1rem -1rem 1rem 1rem gray">
+                <div style="font-size: 40rem;box-shadow: 1rem -1rem 1rem 1rem gray">
+                  <h5 style="color: orange">启梦</h5>
+                </div>
+                <div>
+                  <div style="height: 50rem;width: 195rem;overflow-y: scroll;">
+                    <p>{{item.text}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        点击出现信息回显-->
+        <el-dialog v-model="dialogTableVisibleData" width="80%" title="家教详细信息:" :visible.sync="dialogTableVisible">
+          <el-button type="text" icon="el-icon-shopping-cart-full" @click="addOrder()">点击添加该家教至订单列表</el-button><br>
+          {{dialogTableVisibleData}}
+<!--          <div class="divName" @click="save()">点击接单</div>-->
+        </el-dialog>
+      </div>
+      <div class="divCart" >
+        <div style="width: 100%">
+          <div style="text-align:center">
+            <div style="width: 100%;height: 2rem"/>
+            <el-link type="primary" href="/student/GetMessage.html"><i class="el-icon-thumb">回收家教(七三分,平台三)</i></el-link>
+            <el-link type="primary" href="/student/feedBack.html"><i class="el-icon-s-promotion">反馈</i></el-link>
+            <el-link type="primary" href="/QM/index.html"><i class="el-icon-s-home">主页</i></el-link>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="element-ui/index.js"></script>
+    <!-- 引入axios -->
+    <script src="js/axios.min.js"></script>
+    <script src="js/request.js"></script>
+    <script src="js/common.js"></script>
+  </body>
+  <script>
+      new Vue({
+          el:'#main',
+          data(){
+            return {
+              //家教信息id
+              messageId: '',
+              dialogTableVisibleData: '',
+              dialogTableVisible: false,
+              //常用搜索词
+              hotWords:['岳麓区','天心区','雨花区','望城区','芙蓉区','开福区','浏阳','宁乡','长沙县'],
+              //下拉选择框绑定值
+              select: '',
+              //搜索绑定
+              input: '',
+              //绑定家教平台选择id
+              selectId:'',
+              activeType:0,
+              categoryList:[],
+              dishList:[],
+            }
+          },
+          computed:{
+          },
+          mounted(){
+            this.initData();
+            this.initMessage();
+          },
+          methods:{
+            //用户添加订单
+            addOrder(){
+              let self_=this;
+              //发送axios请求
+              axios({
+                method: 'post',
+                url: '/teacher/ord',
+                data: {
+                  messageId: this.messageId
+                }
+              }).then((resp)=>{
+                if (resp.data.code === 1){
+                  self_.$message.success("成功添加至订单");
+                }else {
+                  if (resp.data.msg == "尚未登录"){
+                    window.requestAnimationFrame(()=>{
+                      window.location.href= '/teacher/page/login.html'
+                    })
+                  }else {
+                    self_.$message.error(resp.data.msg);
+                  }
+                }
+              })
+            },
+            //初始化家教平台数据数据
+            initData(){
+              // categoryList
+              let self_=this;
+              axios.get("/teacher/member/list").then((resp)=>{
+                this.categoryList=resp.data.data;
+              })
+            },
+            //初始化家教信息数据
+            initMessage(){
+              let self_=this;
+              axios.get("/teacher/message/list").then((resp)=>{
+                this.dishList=resp.data.data;
+              })
+            },
+            //点击家教平台
+            //分类点击
+            categoryClick(index,id){
+              this.activeType = index
+              //发送ajax请求获取该平台数据
+              console.log(id==='1')
+              if (!(id==='1')){
+                this.selectId=id;
+                let self_=this;
+                axios.get("/teacher/message/select?id="+this.selectId).then((resp)=>{
+                  self_.dishList=resp.data.data;
+                })
+              }else {
+                this.selectId='';
+                this.initMessage();
+              }
+
+            },
+            //点击搜索按钮
+            search(){
+              let self_=this;
+              axios.get("/teacher/message/select?id="+this.selectId+"&addr="+this.select+"&content="+this.input).then((resp)=>{
+                this.dishList=resp.data.data;
+              })
+              this.select='';
+              this.input='';
+            },
+            toUserPage(){
+              window.requestAnimationFrame(()=>{
+                window.location.href= '/teacher/page/user.html'
+              })
+            },
+            async dishDetails(item){
+              //先清除对象数据，如果不行的话dialog使用v-if
+              this.dialogTableVisibleData = ''
+              this.dialogTableVisibleData = ''
+              this.dialogTableVisibleData = item.text
+              this.messageId=item.id
+              this.dialogTableVisible = true
+            }
+
+          }
+      })
+  </script>
+  </html>

@@ -1,0 +1,60 @@
+server:
+  port: 10010
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/QM_student
+      username: root
+      password: 123456
+  cloud:
+    nacos:
+      server-addr: localhost:8848 #nacos地址
+    gateway:
+      routes:
+        #学生端
+        - id: studentPage-service #路由标识必须唯一
+          uri: lb://studentService #路由目标地址
+          predicates: #路由断言，判断请求路劲
+            - Path=/student/**
+          filters:
+            - StripPrefix=1
+        #mian官网页面
+        - id: xiaolong-service #路由标识必须唯一
+          uri: lb://xiaolongService #路由目标地址
+          predicates: #路由断言，判断请求路劲
+            - Path=/QM/**
+          filters:
+            - StripPrefix=1
+        #teacher端
+        - id: teacher-service #路由标识必须唯一
+          uri: lb://teacherService #路由目标地址
+          predicates: #路由断言，判断请求路劲
+            - Path=/teacher/**
+          filters:
+            - StripPrefix=1
+        #manage管理端
+        - id: manage-service #路由标识必须唯一
+          uri: lb://manageService #路由目标地址
+          predicates: #路由断言，判断请求路劲
+            - Path=/manage/**
+          filters:
+            - StripPrefix=1
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: # 允许哪些网站的跨域请求
+              - "http://localhost:8090"
+              - "http://www.leyou.com"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+  application:
+    name: gateway

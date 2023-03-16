@@ -1,0 +1,488 @@
+/**
+首屏样式
+*/
+#main {
+  height: 100%;
+}
+
+#main .divHead {
+  background: url(/images/bg.jpg);
+  background-color:#b2b4a9 ;
+  background-repeat: no-repeat;
+  height: 142rem;
+  background-size: contain;
+}
+
+#main .divHead img {
+  position: absolute;
+  left: 19rem;
+  top: 41rem;
+  width: 28rem;
+  height: 28rem;
+}
+
+#main .divTitle {
+  width: 345rem;
+  height: 127rem;
+  opacity: 1;
+  background: #ffffff;
+  border-radius: 6rem;
+  box-shadow: 0rem 2rem 5rem 0rem rgba(69, 69, 69, 0.1);
+  position: absolute;
+  left: 50%;
+  top: 77rem;
+  transform: translate(-50%, 0);
+  box-sizing: border-box;
+  padding: 14rem 0 0 8rem;
+}
+#main .divTitle .divStatic {
+  display: flex;
+}
+#main .divTitle .divStatic .logo {
+  width: 39rem;
+  height: 39rem;
+  opacity: 1;
+  background: #333333;
+  border-radius: 6rem;
+  margin-right: 10rem;
+}
+
+#main .divTitle .divStatic .divDesc .divName {
+  width: 180rem;
+  height: 25rem;
+  opacity: 1;
+  font-size: 18rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  text-align: left;
+  color: #20232a;
+  line-height: 25rem;
+}
+
+#main .divTitle .divStatic .divDesc .divSend {
+  opacity: 1;
+  font-size: 11rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  margin-bottom: 10rem;
+}
+
+#main .divTitle .divStatic .divDesc .divSend img {
+  width: 14rem;
+  height: 14rem;
+  opacity: 1;
+  vertical-align: sub;
+}
+
+#main .divTitle .divStatic .divDesc .divSend span {
+  margin-right: 12rem;
+}
+
+#main .divTitle .divStatic .divDesc .divSend span:last-child {
+  margin-right: 0;
+}
+
+#main .divTitle > .divDesc {
+  opacity: 1;
+  font-size: 12rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #9b9b9b;
+  line-height: 17rem;
+  margin-right: 18rem;
+  /*padding-top: 9rem;*/
+  /*border-top: 1rem dashed #ebebeb;*/
+}
+
+#main .divBody {
+  display: flex;
+  height: 100%;
+}
+
+#main .divBody .divType {
+  background: #b2b4a9;
+  overflow: hidden;
+}
+
+#main .divBody .divType ul {
+  margin-top: 61rem;
+  overflow-y: auto;
+  height: calc(100% - 61rem);
+  padding-bottom: 200rem;
+  box-sizing: border-box;
+  /*84*/
+  width: 120rem;
+  opacity: 1;
+}
+
+#main .divBody .divType ul li {
+  padding: 16rem;
+  opacity: 1;
+  font-size: 13rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #666666;
+  line-height: 18rem;
+  letter-spacing: 0rem;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+#main .divBody .divType ul li.active {
+  color: #333333;
+  font-weight: 500;
+  background-color: #ffffff;
+  font-family: PingFangSC, PingFangSC-Regular;
+}
+
+#main .divBody .divMenu {
+  /*background: url(../images/menu.JPG);*/
+  background-color: #a49b9b;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+#main .divBody .divMenu > div {
+  margin-top: 61rem;
+  overflow-y: auto;
+  height: calc(100% - 61rem);
+  padding-bottom: 200rem;
+  box-sizing: border-box;
+}
+
+#main .divBody .divMenu .divItem {
+  margin: 10rem 15rem 20rem 14rem;
+  display: flex;
+}
+
+#main .divBody .divMenu .divItem .el-image {
+  width: 86rem;
+  height: 86rem;
+  margin-right: 14rem;
+}
+
+#main .divBody .divMenu .divItem .el-image img {
+  width: 86rem;
+  height: 86rem;
+  border-radius: 5rem;
+}
+
+#main .divBody .divMenu .divItem > div {
+  position: relative;
+}
+
+#main .divBody .divMenu .divItem .divName {
+  height: 22rem;
+  opacity: 1;
+  font-size: 16rem;
+  font-family: PingFangSC, PingFangSC-Semibold;
+  font-weight: 600;
+  text-align: left;
+  color: #333333;
+  line-height: 22rem;
+  letter-spacing: 0;
+  margin-bottom: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 175rem;
+}
+
+#main .divBody .divMenu .divItem .divDesc {
+  height: 16rem;
+  opacity: 1;
+  font-size: 12rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #666666;
+  line-height: 16rem;
+  letter-spacing: 0rem;
+  margin-bottom: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 144rem;
+}
+
+#main .divBody .divMenu .divItem .divBottom {
+  font-size: 15rem;
+  font-family: DIN, DIN-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #e94e3c;
+  line-height: 20rem;
+  letter-spacing: 0rem;
+}
+
+#main .divBody .divMenu .divItem .divBottom span:first-child {
+  font-size: 12rem;
+}
+
+#main .divBody .divMenu .divItem .divBottom span:last-child {
+  font-size: 15rem;
+}
+
+#main .divBody .divMenu .divItem .divNum {
+  display: flex;
+  position: absolute;
+  right: 12rem;
+  bottom: 0;
+}
+
+#main .divBody .divMenu .divItem .divNum .divDishNum {
+  font-size: 15rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  text-align: center;
+  color: #333333;
+  line-height: 36rem;
+  letter-spacing: 0;
+  width: auto;
+}
+
+#main .divBody .divMenu .divItem .divNum .divTypes {
+  width: 64rem;
+  height: 24rem;
+  opacity: 1;
+  background: #ffc200;
+  border-radius: 12rem;
+  font-size: 12rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  text-align: center;
+  color: #333333;
+  line-height: 24rem;
+  letter-spacing: 0;
+}
+
+#main .divBody .divMenu .divItem .divNum img {
+  width: 36rem;
+  height: 36rem;
+}
+
+#main .divCart {
+  width: 345rem;
+  height: 44rem;
+  opacity: 1;
+  background: #e59b3b;
+  border-radius: 25rem;
+  box-shadow: 0rem 3rem 5rem 0rem rgba(0, 0, 0, 0.25);
+  margin: 0 auto;
+  bottom: 24rem;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 3000;
+}
+#main .divCart > div:first-child {
+  width: 60rem;
+  height: 60rem;
+  position: absolute;
+  left: 11rem;
+  bottom: 0;
+  background-size: 60rem 60rem;
+}
+
+#main .divCart .divNum {
+  font-size: 12rem;
+  font-family: DIN, DIN-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #ffffff;
+  letter-spacing: 0rem;
+  position: absolute;
+  left: 92rem;
+  top: 10rem;
+}
+
+#main .divCart .divNum span:last-child {
+  font-size: 20rem;
+}
+
+#main .divCart > div:last-child {
+  width: 102rem;
+  height: 36rem;
+  opacity: 1;
+  border-radius: 18rem;
+  font-size: 15rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  text-align: center;
+  line-height: 36rem;
+  position: absolute;
+  right: 5rem;
+  top: 4rem;
+}
+
+#main .divCart .btnSubmit {
+  color: white;
+  background: #d8d8d8;
+}
+#main .divCart .btnSubmitActive {
+  color: #333333;
+  background: #ffc200;
+}
+
+#main .divCart .divGoodsNum {
+  width: 18rem;
+  height: 18rem;
+  opacity: 1;
+  background: #e94e3c;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 18rem;
+  position: absolute;
+  left: 50rem;
+  top: -5rem;
+}
+
+#main .divCart .moreGoods {
+  width: 25rem;
+  height: 25rem;
+  line-height: 25rem;
+}
+
+#main .divLayer {
+  position: absolute;
+  height: 68rem;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+}
+
+#main .divLayer .divLayerLeft {
+  background-color: #f6f6f6;
+  opacity: 0.5;
+  width: 84rem;
+  height: 100%;
+}
+
+#main .divLayer .divLayerRight {
+  background-color: white;
+  opacity: 0.5;
+  width: calc(100% - 84rem);
+  height: 100%;
+}
+
+#main .dialogFlavor {
+  opacity: 1;
+  background: #ffffff;
+  border-radius: 10rem;
+}
+
+#main .dialogFlavor .dialogTitle {
+  margin-top: 26rem;
+  margin-bottom: 14rem;
+  font-size: 18rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  color: #333333;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+#main .dialogFlavor .divContent {
+  margin-left: 15rem;
+  margin-right: 15rem;
+}
+
+#main .dialogFlavor .divContent .divFlavorTitle {
+  height: 20rem;
+  opacity: 1;
+  font-size: 14rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #666666;
+  line-height: 20rem;
+  letter-spacing: 0;
+  margin-left: 5rem;
+  margin-bottom: 10rem;
+  margin-top: 10rem;
+}
+
+#main .dialogFlavor .divContent span {
+  display: inline-block;
+  height: 30rem;
+  opacity: 1;
+  background: #ffffff;
+  border: 1rem solid #ffc200;
+  border-radius: 7rem;
+  line-height: 30rem;
+  padding-left: 13rem;
+  padding-right: 13rem;
+  margin: 0 5rem 10rem 5rem;
+  font-size: 14rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: center;
+  color: #333333;
+}
+
+#main .dialogFlavor .divContent .spanActive {
+  background: #ffc200;
+  font-weight: 500;
+}
+
+#main .dialogFlavor .divBottom {
+  margin-top: 20rem;
+  margin-bottom: 19rem;
+  margin-left: 20rem;
+  display: flex;
+  position: relative;
+}
+
+#main .dialogFlavor .divBottom div:first-child {
+  height: 30rem;
+  opacity: 1;
+  font-size: 20rem;
+  font-family: DIN, DIN-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #e94e3c;
+  line-height: 30rem;
+  letter-spacing: 0;
+}
+
+#main .dialogFlavor .divBottom div span {
+  font-size: 14rem;
+}
+
+#main .dialogFlavor .divBottom div:last-child {
+  width: 100rem;
+  height: 30rem;
+  opacity: 1;
+  background: #ffc200;
+  border-radius: 15rem;
+  text-align: center;
+  line-height: 30rem;
+  position: absolute;
+  right: 20rem;
+  font-size: 14rem;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 500;
+  text-align: center;
+  color: #333333;
+}
+
+#main .dialogFlavor .divFlavorClose {
+  position: absolute;
+  bottom: -70rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+#main .dialogFlavor .divFlavorClose img {
+  width: 44rem;
+  height: 44rem;
+}

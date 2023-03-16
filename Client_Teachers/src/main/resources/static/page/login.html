@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+        <title>启梦</title>
+        <link rel="icon" href="../images/sign.png">
+        <!--不同屏幕尺寸根字体设置-->
+        <script src="../js/base.js"></script>
+        <!--element-ui的样式-->
+        <link rel="stylesheet" href="../element-ui/index.css" />
+        <!-- 引入样式  -->
+        <link rel="stylesheet" href="../css/index.css" />
+        <!--本页面内容的样式-->
+        <link rel="stylesheet" href="../css/login.css" />
+      </head>
+    <body>
+        <div id="login" v-loading="loading">
+            <div class="divHead">登录</div>
+            <div class="divContainer1">
+                <el-input placeholder=" 请输入邮箱账号" v-model="form.username"  maxlength='20' @blur="getCode"/></el-input>
+                <div class="divSplit"></div>
+                <el-input placeholder=" 请输入密码" v-model="form.password"  maxlength='20' show-password/></el-input>
+            </div>
+            <div class="divMsg" v-if="msgFlag">邮箱格式错误</div>
+            <el-button type="primary" :class="{btnSubmit:1===1,btnNoPhone:!(form.username && form.password),btnPhone:(form.username && form.password)}" @click="btnLogin">登录</el-button>
+<!--            <a href="/front/page/register.html">无账号？</a>-->
+            <el-container>
+                <el-link type="primary" href="/teacher/page/register.html">无账号(注册)？</el-link>
+                <span>/</span>
+                <el-link type="primary" href="/teacher/page/update.html">忘记密码</el-link>
+                <el-link type="primary" icon="el-icon-house" href="/teacher/index.html">进入接单首页</el-link>
+            </el-container>
+        </div>
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="../js/vue.js"></script>
+        <!-- 引入组件库 -->
+        <script src="../element-ui/index.js"></script>
+        <!-- 引入axios -->
+        <script src="../js/axios.min.js"></script>
+        <script src="../js/request.js"></script>
+    </body>
+    <script>
+        new Vue({
+            el:"#login",
+            data(){
+                return {
+                    form:{
+                        username:'',
+                        password:''
+                    },
+                    msgFlag:false,
+                    loading:false
+                }
+            },
+            computed:{},
+            created(){
+                this.getUser()
+            },
+            mounted(){},
+            methods:{
+                //发送异步请求，记住登录密码
+                getUser(){
+                    //发送axios请求，获取资料
+                    let sele_this=this;
+                    axios.get("/user/remember").then((resp)=>{
+                        if (resp.data.data.remember === '1'){
+                            sele_this.checked=true;
+                            sele_this.form.phone=resp.data.data.phone;
+                            sele_this.form.password=resp.data.data.password;
+                        }else {
+                            sele_this.checked=false;
+                        }
+                    })
+                }
+                ,
+                getCode(){
+                    const regex = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9-.]+/;
+                    if (regex.test(this.form.username)) {
+                        this.msgFlag = false
+                    }else{
+                        this.msgFlag = true
+                    }
+                },
+                async btnLogin(){
+                    if(this.form.username && this.form.password && !this.msgFlag){
+                        let self_=this;
+                        self_.loading = true
+                        //发送axios请求
+                        axios({
+                            method: 'post',
+                            url: '/teacher/user/login',
+                            data: this.form
+                        }).then((resp)=>{
+                            self_.loading = false
+                            if(resp.data.code === 1){
+                                sessionStorage.setItem("username",this.form.username)
+                                window.requestAnimationFrame(()=>{
+                                    window.location.href= '/teacher/index.html'
+                                })
+                            }else{
+                                this.$message.error(resp.data.msg)
+                            }
+                        })
+                    }else{
+                        this.$message.error("账号或密码不规范...");
+                    }
+                }
+            }
+        })
+    </script>
+</html>

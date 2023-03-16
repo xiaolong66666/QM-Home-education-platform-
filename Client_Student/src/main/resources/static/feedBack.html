@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+        <title>启梦</title>
+        <link rel="icon" href="/images/sign.png">
+        <!--不同屏幕尺寸根字体设置-->
+        <script src="js/base.js"></script>
+        <!--element-ui的样式-->
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <!-- 引入样式  -->
+        <link rel="stylesheet" href="css/index.css"/>
+        <!--本页面内容的样式-->
+        <link rel="stylesheet" href="css/order.css" />
+    </head>
+    <body>
+        <div id="order" class="app">
+            <div class="divHead">
+                <div class="divTitle">
+                    <i class="el-icon-arrow-left" @click="goBack"></i>反馈
+                </div>
+            </div>
+            <div class="divContainer1">
+                <el-input
+                        type="textarea"
+                        :rows="10"
+                        placeholder="请填写内容......"
+                        v-model="text">
+                </el-input>
+            </div>
+            <div style="width: 100%;display: flex;
+            justify-content: center;">
+                <el-button type="primary" @click="save()">提交</el-button>
+            </div>
+        </div>
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="js/vue.js"></script>
+        <!-- 引入组件库 -->
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <!-- 引入axios -->
+        <script src="js/axios.min.js"></script>
+        <script src="js/request.js"></script>
+        <script>
+        new Vue({
+            el:"#order",
+            data(){
+                return {
+                    text: ''
+                }
+            },
+            methods: {
+                goBack() {
+                    // window.location.href = 'index.html'
+                    window.history.go(-1);
+                },
+                save() {
+                    let self_=this;
+                    if (this.text.trim().length>0){
+                        axios({
+                            method: 'post',
+                            url: '/student/feedback',
+                            data: {'text':this.text}
+                        }).then((resp) => {
+                            if (resp.data.code === 1){
+                                // window.location.href = 'index.html'
+                                self_.goBack();
+                            }else {
+                                this.$message.error(resp.data.msg);
+                            }
+                        })
+                    }else {
+                        this.$message.error("反馈信息不能为空");
+                    }
+
+                }
+            }
+        })
+        </script>
+    </body>
+</html>
